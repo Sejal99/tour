@@ -1,13 +1,23 @@
 
 import './App.css';
 import {ToastContainer} from "react-toastify";
-import "react-toastify/dist/react-toastify.css";
+import "react-toastify/dist/ReactToastify.css";
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import Login from './pages/Login';
+import Home from './pages/Home';
+import Register from './pages/Register';
 function App() {
   return (
+    <BrowserRouter>
     <div className="App">
       <ToastContainer/>
-    <h1>hii</h1>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
     </div>
+    </BrowserRouter>
   );
 }
 
