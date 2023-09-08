@@ -13,6 +13,8 @@ import {
   import { useDispatch,useSelector } from 'react-redux';
   import { toast } from "react-toastify";
 import { login } from '../redux/features/authSlice';
+import { GoogleLogin } from "react-google-login";
+import { googleSignIn } from "../redux/features/authSlice";
 
 
   const initialState={
@@ -24,11 +26,14 @@ import { login } from '../redux/features/authSlice';
 
 const Login = () => {
 const [formValue,setFormValue]=useState(initialState);
+const {loading ,error} =useSelector((state)=>({...state.auth}));
 const {email,password}=formValue;
 const dispatch=useDispatch();//dispatch action created in authslice.js file
 const navigate =useNavigate();
 
-
+useEffect(()=>{
+  error && toast.error(error);
+},[error]);
 const handleSubmit=(e)=>{
     e.preventDefault();
     if (email && password) {
@@ -39,6 +44,24 @@ const onInputChange=(e)=>{
     let {name,value} = e.target;
     setFormValue({...formValue, [name]: value});
 };
+
+const googleSuccess = (resp) => {
+  console.log(resp);
+  const email = resp?.profileObj?.email;
+  const name = resp?.profileObj?.name;
+  const token = resp?.tokenId;
+  const googleId = resp?.googleId;
+  const result = { email, name, token, googleId };
+  dispatch(googleSignIn({ result, navigate, toast }));
+};
+
+
+const googleFailure = (error) => {
+  toast.error(error);
+};
+
+
+
   return (
     <div style={{margin:"auto",padding:"15px",maxWidth:"450px",alignContent:"center",marginTop:"120px",}}>
      <MDBCard alignment="center">
@@ -76,22 +99,22 @@ const onInputChange=(e)=>{
             {/* login button */}
             <div className="col-12">
               <MDBBtn style={{ width: "100%" }} className="mt-2">
-                {/* {loading && (
+                {loading && (
                   <MDBSpinner
                     size="sm"
                     role="status"
                     tag="span"
                     className="me-2"
                   />
-                )} */}
+                )}
                 Login
               </MDBBtn>
             </div>
 
           </MDBValidation>
           <br />
-          {/* <GoogleLogin
-            clientId="Your Client Id"
+          <GoogleLogin
+            clientId="341523866973-vegf57oohkotd3rlacgf6gp49s4ff7el.apps.googleusercontent.com"
             render={(renderProps) => (
               <MDBBtn
                 style={{ width: "100%" }}
@@ -105,7 +128,7 @@ const onInputChange=(e)=>{
             onSuccess={googleSuccess}
             onFailure={googleFailure}
             cookiePolicy="single_host_origin"
-          /> */}
+          />
         </MDBCardBody>
 
         {/* when account not found */}
