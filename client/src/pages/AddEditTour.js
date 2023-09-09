@@ -104,7 +104,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
-                textarea
+                
                 validation="Please provide description"
               />
             </div>
