@@ -35,7 +35,7 @@ const CardTour = ({imageFile,description,title,tags,_id,name}) => {
           <MDBCardBody>
             <MDBCardTitle className='text-start'>{title}</MDBCardTitle>
             <MDBCardText className='text-start'>{excerpt(description)}
-            <Link to={'/tour/${_id}'}>
+            <Link to={`/tour/${_id}`}>
             Read more
             </Link>
             
