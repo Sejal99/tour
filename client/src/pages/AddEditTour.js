@@ -9,7 +9,7 @@ import {
 import ChipInput from "material-ui-chip-input";
 import FileBase from "react-file-base64";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useParams} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createTour, updateTour } from "../redux/features/tourSlice";
 
@@ -22,7 +22,7 @@ const initialState = {
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
   
-  const { error, loading } = useSelector((state) => ({
+  const { error, loading ,userTours} = useSelector((state) => ({
     ...state.tour,
   }));
   const { user } = useSelector((state) => ({ ...state.auth }));
@@ -30,6 +30,18 @@ const AddEditTour = () => {
   const navigate = useNavigate();
 
   const { title, description, tags } = tourData;
+  const {id}=useParams();
+
+  useEffect(() => {
+    if (id) {
+      const singleTour = userTours.find((tour) => tour._id === id);
+      console.log(singleTour);
+      setTourData({ ...singleTour });
+    }
+    
+  }, [id]);
+
+
 
   useEffect(() => {
     error && toast.error(error);
@@ -41,7 +53,11 @@ const AddEditTour = () => {
     if (title && description && tags) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
       dispatch(createTour({ updatedTourData, navigate, toast }));
-
+      if (!id) {
+        dispatch(createTour({ updatedTourData, navigate, toast }));
+      } else {
+        dispatch(updateTour({ id, updatedTourData, toast, navigate }));
+      }
       handleClear();
     }
   };
@@ -78,7 +94,7 @@ const AddEditTour = () => {
       className="container"
     >
       <MDBCard alignment="center">
-        <h5>Add Tour</h5>
+        <h5>{id ? "Update Tour" : "Add Tour"}</h5>
         <MDBCardBody>
           <MDBValidation onSubmit={handleSubmit} className="row g-3" noValidate>
             <div className="col-md-12">
@@ -131,7 +147,8 @@ const AddEditTour = () => {
             </div>
 
             <div className="col-12">
-              <MDBBtn style={{ width: "100%" }}>Submit</MDBBtn>
+              <MDBBtn style={{ width: "100%" }}>   {id ? "Update" : "Submit"}
+              </MDBBtn>
               <MDBBtn
                 style={{ width: "100%" }}
                 className="mt-2"

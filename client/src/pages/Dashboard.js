@@ -44,7 +44,7 @@ const Dashboard = () => {
   }
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this tour ?")) {
-    //   dispatch(deleteTour({ id, toast }));
+       dispatch(deleteTour({ id, toast }));
     }
   };
 
