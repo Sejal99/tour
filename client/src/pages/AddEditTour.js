@@ -21,7 +21,7 @@ const initialState = {
 
 const AddEditTour = () => {
   const [tourData, setTourData] = useState(initialState);
-  
+  const [tagErrMsg, setTagErrMsg] = useState(null);
   const { error, loading ,userTours} = useSelector((state) => ({
     ...state.tour,
   }));
@@ -49,7 +49,9 @@ const AddEditTour = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+     if (!tags.length) {
+      setTagErrMsg("Please provide some tags");
+    }
     if (title && description && tags) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
       dispatch(createTour({ updatedTourData, navigate, toast }));
@@ -68,6 +70,7 @@ const AddEditTour = () => {
   };
 
   const handleAddTag = (tag) => {
+    setTagErrMsg(null);
     setTourData({ ...tourData, tags: [...tourData.tags, tag] });
   };
 
@@ -107,6 +110,7 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
+                
                 validation="Please provide title"
               />
             </div>
@@ -120,6 +124,8 @@ const AddEditTour = () => {
                 className="form-control"
                 required
                 invalid
+                textarea
+                rows={4}
                 
                 validation="Please provide description"
               />
@@ -136,6 +142,9 @@ const AddEditTour = () => {
                 onDelete={(tag) => handleDeleteTag(tag)}
               />
             </div>
+            {tagErrMsg && <div className="tagErrMsg">{tagErrMsg}</div>}
+
+
             <div className="d-flex justify-content-start">
               <FileBase
                 type="file"

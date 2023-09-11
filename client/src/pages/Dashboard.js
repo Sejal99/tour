@@ -61,9 +61,9 @@ const Dashboard = () => {
       <hr style={{ maxWidth: "570px" }} />
       {userTours &&
         userTours.map((item) => (
-          <MDBCardGroup>
+          <MDBCardGroup  key={item._id}>
             <MDBCard style={{ maxWidth: "600px" }}
-              key={item._id}
+             
             className="mt-2"
             >
               
