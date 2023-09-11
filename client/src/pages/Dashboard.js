@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteTour, getToursByUser } from "../redux/features/tourSlice";
 import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
 
 const Dashboard = () => {
   const { user } = useSelector((state) => ({ ...state.auth }));
@@ -36,6 +37,11 @@ const Dashboard = () => {
     return str;
   };
 
+
+
+  if (loading) {
+    return <Spinner/>;
+  }
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this tour ?")) {
     //   dispatch(deleteTour({ id, toast }));
@@ -94,8 +100,7 @@ const Dashboard = () => {
                         🗑️
 
                      </div>
-                    
-                   <Link to={`/editTour/${item._id}`}>
+                     <Link to={`/editTour/${item._id}`}>
                    📝
                    </Link>
                    </div>
