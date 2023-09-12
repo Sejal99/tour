@@ -56,8 +56,19 @@ const Dashboard = () => {
         alignContent: "center",
       }}
     >
+ {userTours.length === 0 && (
+        <h3>No tour available with the user: {user?.result?.name}</h3>
+      )}
+
+      {userTours.length > 0 && (
+        <>
+
       <h5 className="text-center">Dashboard: {user?.result?.name}</h5>
       <hr style={{ maxWidth: "570px" }} />
+      </>
+      )}
+
+      
       {userTours &&
         userTours.map((item) => (
           <MDBCardGroup  key={item._id}>

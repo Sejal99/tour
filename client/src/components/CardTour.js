@@ -78,8 +78,10 @@ const CardTour = ({imageFile,description,title,tags,_id,name,likes}) => {
       />
        <div className="top-left">{name}</div>
         <span className="text-start tag-card">
-        {tags.map((tag) => (
-            <Link to={`/tours/tag/${tag}`}> #{tag}</Link>
+        {tags.map((tag,index) => (
+            <Link key={index} to={`/tours/tag/${tag}`}> 
+            {" "}
+            #{tag}</Link>
           ))}
           
           <MDBBtn
