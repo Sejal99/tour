@@ -3,17 +3,18 @@ import { MDBCol, MDBContainer, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import { getTours } from "../redux/features/tourSlice";
+import { getTours,setCurrentPage } from "../redux/features/tourSlice";
 import CardTour from "../components/CardTour";
 import Spinner from "../components/Spinner";
+import Pagination from "../components/Pagination";
 
 const Home = () => {
-  const { tours, loading } = useSelector((state) => ({ ...state.tour }));
+  const { tours, loading,currentPage,numberOfPages } = useSelector((state) => ({ ...state.tour }));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTours());
-  },[]);
+    dispatch(getTours(currentPage));
+  },[currentPage]);
 
   if (loading) {
     return <Spinner/>;
@@ -43,6 +44,15 @@ const Home = () => {
           </MDBContainer>
         </MDBCol>
       </MDBRow>
+      {/* {tours.length > 0 && !searchQuery && ( */}
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          numberOfPages={numberOfPages}
+          currentPage={currentPage}
+          dispatch={dispatch}
+        />
+      {/* )} */}
+
     </div>
   );
 };
