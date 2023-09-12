@@ -8,8 +8,7 @@ import {
   MDBCardImage,
   MDBRow,
   MDBCol,
-  MDBBtn,
-  MDBIcon,
+
   MDBCardGroup,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";

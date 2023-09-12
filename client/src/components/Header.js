@@ -12,8 +12,9 @@ import {
 } from "mdb-react-ui-kit";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogout } from "../redux/features/authSlice";
-// import { searchTours } from "../redux/features/tourSlice";
+
 import { useNavigate } from "react-router-dom";
+import { searchTours } from "../redux/features/tourSlice";
 // import decode from "jwt-decode";
 
 const Header = () => {
@@ -33,13 +34,13 @@ const Header = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (search) {
-    //   dispatch(searchTours(search));
-    //   navigate(`/tours/search?searchQuery=${search}`);
-    //   setSearch("");
-    // } else {
-    //   navigate("/");
-    // }
+    if (search) {
+      dispatch(searchTours(search));
+      navigate(`/tours/search?searchQuery=${search}`);
+      setSearch("");
+    } else {
+      navigate("/");
+    }
   };
 
   const handleLogout = () => {
@@ -122,7 +123,10 @@ const Header = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
             <div style={{ marginTop: "5px", marginLeft: "5px" }}>
-              <MDBIcon fas icon="search" />
+              {/* <MDBIcon fas icon="search" /> */}
+              <div style={{cursor:"pointer"}} >
+                🔍
+              </div>
             </div>
           </form>
         </MDBCollapse>

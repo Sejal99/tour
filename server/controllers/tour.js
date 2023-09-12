@@ -93,4 +93,22 @@ export const getTours = async (req, res) => {
       res.status(404).json({ message: "Something went wrong" });
     }
   };
+
+
+
+    export const getToursBySearch = async (req, res) => {
+      console.log ('sssssssssssssssssssssssssssssssssssssssss');
+      const { searchQuery } = req.query;
+
+     
+      try {
+        const title = new RegExp(searchQuery, "i");
+        const tours = await TourModal.find({ title });
+        res.json(tours);
+      } catch (error) {
+        res.status(404).json({ message: "Something " });
+      
+      }
+    };
+  
   

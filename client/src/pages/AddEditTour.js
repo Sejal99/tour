@@ -104,7 +104,7 @@ const AddEditTour = () => {
               <MDBInput
                 placeholder="Enter Title"
                 type="text"
-                value={title}
+                value={title || ""}
                 name="title"
                 onChange={onInputChange}
                 className="form-control"
