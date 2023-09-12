@@ -11,6 +11,7 @@ getTour,
   getToursBySearch,
   getToursByTag,
   getToursByUser,
+  likeTour,
   updateTour,
 
 } from "../controllers/tour.js";
@@ -26,6 +27,6 @@ router.delete("/:id",auth, deleteTour);
 router.patch("/:id", auth, updateTour);
 router.get("/userTours/:id",auth, getToursByUser);
 router.post("/",auth, createTour);
-
+router.patch("/like/:id", auth, likeTour);
 
 export default router;

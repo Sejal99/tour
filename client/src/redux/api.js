@@ -35,3 +35,6 @@ export const updateTour = (updatedTourData, id) =>
 
 
   export const getRelatedTours = (tags) => API.post(`/tour/relatedTours`, tags);
+
+
+  export const likeTour = (id) => API.patch(`/tour/like/${id}`);
