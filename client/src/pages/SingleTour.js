@@ -11,13 +11,25 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { useParams } from "react-router-dom";
 import moment from "moment";
-import { getTour } from '../redux/features/tourSlice';
+import { getTour,getRelatedTours } from '../redux/features/tourSlice';
+import RelatedTours from "../components/RelatedTours";
+
 
 
 const SingleTour = () => {
     const dispatch = useDispatch();
-    const {tour} =useSelector((state)=>({...state.tour}));
+    const {tour,relatedTours} =useSelector((state)=>({...state.tour}));
     const {id}=useParams();
+  const tags=tour?.tags
+
+
+  useEffect(() => {
+    tags && dispatch(getRelatedTours(tags));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags]);
+
+
+
     useEffect(()=>{
         if(id){
             dispatch(getTour(id))
@@ -60,7 +72,7 @@ const SingleTour = () => {
               {tour.description}
             </MDBCardText>
           </MDBCardBody>
-          {/* <RelatedTours relatedTours={relatedTours} tourId={id} /> */}
+          <RelatedTours relatedTours={relatedTours} tourId={id} />
         </MDBCard>
         {/* <DisqusThread id={id} title={tour.title} path={`/tour/${id}`} /> */}
       </MDBContainer>
